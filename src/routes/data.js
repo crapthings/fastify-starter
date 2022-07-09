@@ -3,7 +3,12 @@ const S = require('fluent-json-schema')
 const { comparePassword } = require('../utils/hash')
 
 module.exports = function (router, options, next) {
-  router.post('/data', async function (req, res) {
+  router.post('/data', {
+    schema: {
+      body: S.object()
+        .prop('text', S.string().required())
+    }
+  }, async function (req, res) {
     const { text } = req.body
 
     await this.mongo.db.collection('data').insertOne({ userId: this.mongo.ObjectId(req.user._id), text })

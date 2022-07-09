@@ -21,6 +21,8 @@ module.exports = function buildFastify (options = {}) {
     url: process.env.MONGO_URL
   })
 
+  fastify.register(require('@fastify/multipart'))
+
   for (const routeName of routes) {
     const router = require(path.resolve(ROUTES_FOLDER, routeName))
     fastify.register(router, { prefix: '/api' })

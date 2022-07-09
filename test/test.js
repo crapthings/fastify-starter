@@ -2,6 +2,10 @@ require('dotenv').config()
 
 const { test } = require('tap')
 
+const fs = require('fs')
+const path = require('path')
+const formAutoContent = require('form-auto-content')
+
 const Fastify = require('../src')
 
 let token
@@ -131,4 +135,24 @@ test(`list all data with wrong jwt token`, async (t) => {
     })
 
   t.equal(resp.statusCode, 500, 'this should cover onRequest jwt hook')
+})
+
+test(`upload file`, async (t) => {
+  const fastify = Fastify()
+
+  t.teardown(() => fastify.close())
+
+  const form = formAutoContent({
+    upload: fs.createReadStream(path.resolve(process.cwd(), 'dummy.txt'))
+  })
+
+  form.headers.authorization = 'Bearer ' + token
+
+  const resp = await fastify.inject({
+    method: 'post',
+    url: '/api/upload',
+    ...form,
+  })
+
+  t.type(resp.json().result, Object, 'upload file and returns filename')
 })

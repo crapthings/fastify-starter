@@ -10,7 +10,8 @@ const fastify = require('./src')({
 })
 
 fastify.listen({
-  port: process.env.PORT
+  host: process.env.HOST,
+  port: process.env.PORT,
 }, onFastifyListen)
 
 function onFastifyListen () {

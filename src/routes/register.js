@@ -3,6 +3,8 @@ const S = require('fluent-json-schema')
 const { hashPassword } = require('../utils/hash')
 
 module.exports = function (router, options, next) {
+  const Users = router.mongo.db.collection('users')
+
   router.post('/register', {
     schema: {
       body: S.object()
@@ -12,7 +14,7 @@ module.exports = function (router, options, next) {
   }, async function (req, res) {
     const { username, password } = req.body
 
-    const user = await this.mongo.db.collection('users').findOne({ username })
+    const user = await Users.findOne({ username })
 
     if (user) {
       throw new Error('user exists')
@@ -20,7 +22,12 @@ module.exports = function (router, options, next) {
 
     const hashedPassword = await hashPassword(password)
 
-    await this.mongo.db.collection('users').insertOne({ username, password: hashedPassword, createdAt: new Date(), updatedAt: new Date() })
+    await Users.insertOne({
+      username,
+      password: hashedPassword,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
 
     res.send(200)
   })

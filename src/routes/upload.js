@@ -6,6 +6,8 @@ const { pipeline } = require('stream')
 const pump = util.promisify(pipeline)
 
 module.exports = function (router, options, next) {
+  const Uploads = router.mongo.db.collection('uploads')
+
   router.post('/upload', async function (req, res) {
     const data = await req.file()
 
@@ -24,7 +26,7 @@ module.exports = function (router, options, next) {
       mimetype: data.mimetype,
     }
 
-    await this.mongo.db.collection('uploads').insertOne(result)
+    await Uploads.insertOne(result)
 
     res.send({
       result

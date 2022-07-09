@@ -24,7 +24,7 @@ module.exports = function (router, options, next) {
       throw new Error('wrong password')
     }
 
-    const token = this.jwt.sign({ username })
+    const token = this.jwt.sign({ _id: user._id, username })
 
     this.mongo.db.collection('token').insertOne({ userId: user._id, token })
 

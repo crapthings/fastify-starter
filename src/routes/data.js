@@ -6,7 +6,7 @@ module.exports = function (router, options, next) {
   router.post('/data', async function (req, res) {
     const { text } = req.body
 
-    await this.mongo.db.collection('data').insertOne({ text })
+    await this.mongo.db.collection('data').insertOne({ userId: this.mongo.ObjectId(req.user._id), text })
 
     res.send(200)
   })

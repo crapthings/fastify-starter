@@ -29,7 +29,7 @@ module.exports = function (router, options, next) {
       updatedAt: new Date(),
     })
 
-    res.send(200)
+    res.send()
   })
 
   next()

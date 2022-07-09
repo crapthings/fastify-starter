@@ -16,7 +16,7 @@ module.exports = function (router, options, next) {
 
     await Data.insertOne({ userId: ObjectId(req.user._id), text })
 
-    res.send(200)
+    res.send()
   })
 
   router.get('/data', async function (req, res) {

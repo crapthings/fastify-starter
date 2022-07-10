@@ -23,6 +23,8 @@ module.exports = function buildFastify (options = {}) {
 
   fastify.register(require('@fastify/multipart'))
 
+  fastify.register(require('@fastify/cors'), { exposedHeaders: 'Content-Disposition' })
+
   for (const routeName of routes) {
     const router = require(path.resolve(ROUTES_FOLDER, routeName))
     fastify.register(router, { prefix: '/api' })

@@ -9,6 +9,7 @@ const formAutoContent = require('form-auto-content')
 const Fastify = require('../src')
 
 let token
+let downloadFilename
 
 test(`reset database`, async (t) => {
   const fastify = Fastify()
@@ -131,7 +132,7 @@ test(`list all data with wrong jwt token`, async (t) => {
   const resp = await fastify.inject()
     .get('/api/data')
     .headers({
-      authorization: 'Bearer ' + 123123
+      authorization: 'Bearer test'
     })
 
   t.equal(resp.statusCode, 500, 'this should cover onRequest jwt hook')
@@ -154,5 +155,24 @@ test(`upload file`, async (t) => {
     ...form,
   })
 
-  t.type(resp.json().result, Object, 'upload file and returns filename')
+  const result = resp.json().result
+
+  downloadFilename = result.filepath
+
+  t.type(result, Object, 'upload file and returns filename')
+})
+
+test(`download file`, async (t) => {
+  const fastify = Fastify()
+
+  t.teardown(() => fastify.close())
+
+  const resp = await fastify.inject()
+    .post(`/api/download/${downloadFilename}`)
+    .headers({
+      authorization: 'Bearer ' + token,
+      'Content-Disposition': 'attachment; filename=test.html'
+    })
+
+  t.equal(resp.body, 'upload me\n', 'download file')
 })

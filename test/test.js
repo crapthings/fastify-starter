@@ -135,7 +135,7 @@ test(`list all data with wrong jwt token`, async (t) => {
       authorization: 'Bearer test'
     })
 
-  t.equal(resp.statusCode, 500, 'this should cover onRequest jwt hook')
+  t.equal(resp.statusCode, 401, 'this should cover onRequest jwt hook')
 })
 
 test(`upload file`, async (t) => {
@@ -171,7 +171,6 @@ test(`download file`, async (t) => {
     .post(`/api/download/${downloadFilename}`)
     .headers({
       authorization: 'Bearer ' + token,
-      'Content-Disposition': 'attachment; filename=test.html'
     })
 
   t.equal(resp.body, 'upload me\n', 'download file')

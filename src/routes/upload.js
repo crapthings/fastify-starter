@@ -36,7 +36,10 @@ module.exports = function (router, options, next) {
   router.post('/download/:filename', async function (req, res) {
     const { filename } = req.params
     const stream = fs.createReadStream(path.resolve(process.cwd(), 'uploads', filename), 'utf8')
-    res.send(stream)
+
+    res.header('Content-Disposition', `attachment; filename=${filename}`)
+      .type('application/octet-stream')
+      .send(stream)
   })
 
   next()

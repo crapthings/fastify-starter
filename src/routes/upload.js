@@ -1,7 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 const path = require('path')
-const { pipeline } = require('stream')
+const { pipeline, PassThrough } = require('stream')
 
 const pump = util.promisify(pipeline)
 
@@ -35,7 +35,7 @@ module.exports = function (router, options, next) {
 
   router.post('/download/:filename', async function (req, res) {
     const { filename } = req.params
-    const stream = fs.createReadStream(path.resolve(process.cwd(), 'uploads', filename), 'utf8')
+    const stream = fs.createReadStream(path.resolve(process.cwd(), 'uploads', filename))
 
     res.header('Content-Disposition', `attachment; filename=${filename}`)
       .type('application/octet-stream')

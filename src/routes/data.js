@@ -14,7 +14,7 @@ module.exports = function (router, options, next) {
   }, async function (req, res) {
     const { text } = req.body
 
-    await Data.insertOne({ userId: ObjectId(req.user._id), text })
+    await Data.insertOne({ userId: new ObjectId(req.user._id), text })
 
     res.send()
   })

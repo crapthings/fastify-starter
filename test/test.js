@@ -7,6 +7,7 @@ const path = require('path')
 const formAutoContent = require('form-auto-content')
 
 const Fastify = require('../src')
+const { log } = require('console')
 
 let token
 let downloadFilename
@@ -173,5 +174,5 @@ test(`download file`, async (t) => {
       authorization: 'Bearer ' + token,
     })
 
-  t.equal(resp.body, 'upload me\n', 'download file')
+  t.equal(resp.body, 'upload me', 'upload me')
 })

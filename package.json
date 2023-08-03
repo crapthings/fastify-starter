@@ -13,21 +13,21 @@
   "author": "crapthings",
   "license": "MIT",
   "dependencies": {
-    "@fastify/cors": "^8.2.1",
-    "@fastify/jwt": "^6.7.0",
-    "@fastify/mongodb": "^6.2.0",
-    "@fastify/multipart": "^7.5.0",
-    "@fastify/static": "^6.9.0",
+    "@fastify/cors": "^8.3.0",
+    "@fastify/jwt": "^7.2.0",
+    "@fastify/mongodb": "^7.0.0",
+    "@fastify/multipart": "^7.7.3",
+    "@fastify/static": "^6.10.2",
     "bcrypt": "^5.1.0",
-    "dotenv": "^16.0.3",
-    "fastify": "^4.14.1",
-    "fluent-json-schema": "^4.1.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "fluent-json-schema": "^4.1.1",
     "lodash": "^4.17.21",
-    "nanoid": "^4.0.1"
+    "nanoid": "^4.0.2"
   },
   "devDependencies": {
-    "form-auto-content": "^3.0.0",
-    "pino-pretty": "^10.0.0",
-    "tap": "^16.3.4"
+    "form-auto-content": "^3.2.0",
+    "pino-pretty": "^10.2.0",
+    "tap": "^16.3.8"
   }
 }
